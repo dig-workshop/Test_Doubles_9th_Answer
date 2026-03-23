@@ -30,9 +30,24 @@ describe('RocketLauncherImpl（ロケット発射装置）のテスト', () => {
 
     // vi.fn() を使って、モック関数を作成してみましょう。モック関数を使うと、より簡単に「晴れ」の状態を Stub できます。
     it('天気が「晴れ」の場合、打ち上げを実行すること(モック関数を使った場合)', async () => {
+        const StubSunnyWeatherRepository = {
+            getWeather: vi.fn().mockResolvedValue("SUNNY")
+        }
+        const rocketLauncher = new RocketLauncherImpl(StubSunnyWeatherRepository)
+
+        const result = await rocketLauncher.launch()
+
+        expect(result).toBeTruthy()
     })
     // モック関数を使って、「雨」の状態も Stub してみましょう。
     it('天気が「雨」の場合、打ち上げを中止すること(モック関数を使った場合)', async () => {
+        const StubRainyWeatherRepository = {
+            getWeather: vi.fn().mockResolvedValue("RAINY")
+        }
+        const rocketLauncher = new RocketLauncherImpl(StubRainyWeatherRepository)
 
+        const result = await rocketLauncher.launch()
+
+        expect(result).toBeFalsy()
     })
 })
