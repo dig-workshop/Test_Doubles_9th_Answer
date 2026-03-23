@@ -4,6 +4,10 @@ export class RocketLauncherImpl implements LaunchRocketSystem {
 
     launch(rocket: Rocket, auth: Auth): void {
         // テストが通るように修正してください
-        rocket.fire()
+        if (auth.authenticate()) {
+            return rocket.fire()
+        }else{
+            return rocket.abort()
+        }
     }
 }

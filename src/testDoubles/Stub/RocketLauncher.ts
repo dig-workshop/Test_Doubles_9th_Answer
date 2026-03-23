@@ -14,9 +14,14 @@ export class WeatherRepositoryImpl implements WeatherRepository {
 export class RocketLauncherImpl implements LaunchRocketSystem {
     constructor(private weatherRepository: WeatherRepository = new WeatherRepositoryImpl) {}
 
-    launch(): Promise<boolean> {
+    async launch (): Promise<boolean> {
         // まずは「晴れ」の時のテストが通るように書き換えましょう。
         // 「晴れ」のテストが通り、「雨」の Stub ができたら、どちらのテストも通るように書き換えてください。
-        return Promise.resolve(false)
+        if (await this.weatherRepository.getWeather() === "SUNNY" ) {
+            return Promise.resolve(true)
+        }else {
+            return Promise.resolve(false)
+        }
     }
+
 }

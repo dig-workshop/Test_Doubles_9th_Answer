@@ -9,6 +9,8 @@ export default class FakeAuthServer implements AuthServer {
 
     getUser(userId: string): Promise<User | undefined> {
         // テストが通るように修正してください
-        return Promise.resolve(undefined)
+        if (this.authedUsers.length === 0) return Promise.resolve(undefined)
+        if(!this.authedUsers.includes(userId)) return Promise.resolve(undefined)
+        return Promise.resolve({name: "user name", email: "example@mail.com"})
     }
 }
